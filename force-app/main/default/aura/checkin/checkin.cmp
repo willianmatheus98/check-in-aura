@@ -4,77 +4,48 @@
   @Author             : wbatista@moldsoft.com.br
   @Group              : 
   @Last Modified By   : wbatista@moldsoft.com.br
-  @Last Modified On   : 26/11/2019 12:51:09
+  @Last Modified On   : 29/11/2019 11:46:56
   @Modification Log   : 
   Ver       Date            Author      		    Modification
   1.0    25/11/2019   wbatista@moldsoft.com.br     Initial Version
+  1.1    26/11/2019   slima@moldsoft.com.br     One space
 -->
-<aura:component
-  controller="CheckInController"
-  implements="force:appHostable,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:hasRecordId"
->
-  <aura:attribute name="observacoes" type="String" />
-  <aura:attribute name="userLatitude" type="Decimal" />
-  <aura:attribute name="userLongitude" type="Decimal" />
+<aura:component controller="CheckInController" implements="force:appHostable,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:hasRecordId">
+    <aura:attribute name="observacoes" type="String" />
+    <aura:attribute name="userLatitude" type="Decimal" />
+    <aura:attribute name="userLongitude" type="Decimal" />
 
-  <aura:attribute name="title" type="String" default="Check-in" />
-  <aura:attribute
-    name="serviceResourceName"
-    type="string"
-    default="Hello there!"
-  />
-  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="title" type="String" default="Check-in" />
+    <aura:attribute name="serviceResourceName" type="string" />
 
-  <aura:attribute name="accept" type="List" default="['.jpg', '.jpeg']" />
-  <aura:attribute name="multiple" type="Boolean" default="false" />
-  <aura:attribute name="disabled" type="Boolean" default="false" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
-  <aura:attribute name="loaded" type="Boolean" default="false" />
-  <aura:attribute name="enableCheckIn" type="Boolean" default="false" />
+    <aura:attribute name="accept" type="List" default="['.jpg', '.jpeg']" />
+    <aura:attribute name="multiple" type="Boolean" default="false" />
+    <aura:attribute name="disabled" type="Boolean" default="false" />
 
-  <lightning:card>
-    <aura:set attribute="title">
-      <lightning:icon iconName="utility:checkin" size="small" />
-      {! v.title }
-    </aura:set>
-    <aura:if isTrue="{! v.loaded }">
-      <div class="slds-m-left_small slds-m-right_small">
-        <ui:inputText
-          label="Nome do agente"
-          class="field"
-          value="{!v.serviceResourceName}"
-          disabled="true"
-        />
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="enableCheckIn" type="Boolean" default="false" />
 
-        <lightning:fileUpload
-          name="fileUploader"
-          label="Foto do local/serviço"
-          multiple="{!v.multiple}"
-          accept="{!v.accept}"
-          disabled="{!v.disabled}"
-          recordId="{!v.recordId}"
-          onuploadfinished="{! c.handleUploadFinished }"
-        />
+    <lightning:card>
+        <aura:set attribute="title">
+            <lightning:icon iconName="utility:checkin" size="small" /> {! v.title }
+        </aura:set>
+        <aura:if isTrue="{! v.loaded }">
+            <div class="slds-m-left_small slds-m-right_small">
+                <ui:inputText label="Nome do agente" class="field" value="{!v.serviceResourceName}" disabled="true" />
 
-        <lightning:textarea
-          value="{!v.observacoes}"
-          placeholder="Observações"
-          label="Observações"
-          name="observacoesInput"
-          aura:id="observacoesInput"
-        />
-      </div>
-      <aura:set attribute="else">
-        <lightning:spinner alternativeText="Carregando" />
-      </aura:set>
-    </aura:if>
-    <aura:set attribute="footer">
-      <lightning:button
-        disabled="{!! v.enableCheckIn }"
-        label="Fazer check-in"
-        variant="brand"
-        onclick="{!c.handleSubmitButton}"   
-      />
-    </aura:set>
-  </lightning:card>
+                <lightning:fileUpload disabled="{!! v.enableCheckIn }" name="fileUploader" label="Foto do local/serviço" multiple="{!v.multiple}" accept="{!v.accept}"  recordId="{!v.recordId}" onuploadfinished="{! c.handleUploadFinished }" />
+
+                <lightning:textarea disabled="{!! v.enableCheckIn }" value="{!v.observacoes}" placeholder="Observações" label="Observações" name="observacoesInput" aura:id="observacoesInput" />
+            </div>
+            <aura:set attribute="else">
+                <lightning:spinner alternativeText="Carregando" />
+            </aura:set>
+        </aura:if>
+        <aura:set attribute="footer">
+            <lightning:button disabled="{!! v.enableCheckIn }" label="Fazer check-in" variant="brand" onclick="{!c.handleSubmitButton}" />
+        </aura:set>
+    </lightning:card>
 </aura:component>

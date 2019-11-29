@@ -1,0 +1,57 @@
+<!--
+  @File Name          : checkInLWC.html
+  @Description        : 
+  @Author             : wbatista@moldsoft.com.br
+  @Group              : 
+  @Last Modified By   : wbatista@moldsoft.com.br
+  @Last Modified On   : 29/11/2019 15:38:33
+  @Modification Log   : 
+  Ver       Date            Author      		    Modification
+  1.0    29/11/2019   wbatista@moldsoft.com.br     Initial Version
+-->
+<template>
+  <lightning-card>
+    <h3 slot="title">
+      <lightning-icon icon-name="utility:checkin" size="small"></lightning-icon>
+      {title}
+    </h3>
+    <div slot="footer">
+      <lightning-button
+        variant="brand"
+        label="Fazer check-in"
+        title="Clique para fazer check-in"
+        onclick={handleSubmitButton}
+        disabled={disableCheckIn}
+        class="slds-m-left_x-small"
+      ></lightning-button>
+    </div>
+    <template if:true={loaded}>
+      <div class="slds-p-around_medium lgc-bg">
+        <lightning-input
+          type="text"
+          label="Nome do agente"
+          disabled={disabled}
+          value={serviceResourceName}
+        ></lightning-input>
+
+        <lightning-input
+          type="file"
+          disabled={disableCheckIn}
+          label="Foto do local/serviço"
+          accept={accept}
+          onuploadfinished={handleUploadFinished}
+        ></lightning-input>
+
+        <lightning-textarea
+          label="Observações"
+          disabled={disableCheckIn}
+          placeholder="Observações"
+          onchange={onObservationsChange}
+        ></lightning-textarea>
+      </div>
+    </template>
+    <template if:false={loaded}>
+      <lightning-spinner alternative-text="Carregando"></lightning-spinner>
+    </template>
+  </lightning-card>
+</template>

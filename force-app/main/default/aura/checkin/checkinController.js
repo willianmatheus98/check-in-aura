@@ -58,6 +58,7 @@
         "error"
       );
     }
+    
   },
   handleUploadFinished: function(component, event, helper) {
     // This will contain the List of File uploaded data and status
